@@ -36,23 +36,22 @@ public class ShoppingTest extends BaseTest {
         //dodaj konkretny sweter do koszyka
         shoppingFormPage.pickSweaterSize(chosenSize);
         shoppingFormPage.selectQuantity(chosenQuantity);
+
+        SweaterFormPage sweaterFormPage = new SweaterFormPage(driver);
+
+        //sprawdz czy zniżka została poprawnie naliczona
+        Assert.assertEquals(Double.parseDouble(sweaterFormPage.getRegularPrice())*0.8,
+                Double.parseDouble(sweaterFormPage.getDiscountPrice()), 0.2);
+
         shoppingFormPage.addSweaterToCart();
 
+        //przejdź do koszyka
+        sweaterFormPage.goToCart();
+
         CartFormPage cartFormPage = new CartFormPage(driver);
-        //String sweaterRegularPrice= cartFormPage.getRegularPrice();
-
-        // ZROBIC ASERCJE KOSZYKA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-       // Assert.assertEquals(Integer.parseInt(sweaterRegularPrice)*0.8, cartFormPage.getDiscountPrice());
-
-        //przejdź do podsumiwania
-        cartFormPage.goToSummary();
-
-        //Assert.assertEquals(chosenSize * Integer.parseInt(chosenQuantity), 5);
-
-        SummaryFormPage summaryFormPage = new SummaryFormPage(driver);
 
         //sprawdź poprawność adresu
-        String confirmationText = summaryFormPage.getAddressConfirmationMessage();
+        String confirmationText = cartFormPage.getAddressConfirmationMessage();
         Assert.assertTrue(confirmationText.contains(userFirstName));
         Assert.assertTrue(confirmationText.contains(userLastName));
         Assert.assertTrue(confirmationText.contains("Warszawa"));
@@ -60,12 +59,22 @@ public class ShoppingTest extends BaseTest {
         Assert.assertTrue(confirmationText.contains("01-001"));
         Assert.assertTrue(confirmationText.contains("United Kingdom"));
 
-        summaryFormPage.checkSummary();
+        cartFormPage.proceedCart();
+
         OrderAndHistroyDetailsFormPage oder=new OrderAndHistroyDetailsFormPage(driver);
         //oder.cosCos("XRHNHGEBX");
 
         //zrób screenshot
-        ScreenShotFormPage screenShotFormPage = new ScreenShotFormPage(driver);
-        screenShotFormPage.takeScreenshot();
+        OrderSummaryFormPage orderSummaryFormPage = new OrderSummaryFormPage(driver);
+        //sprawdź czy kupiony został prawidłowy produkt
+
+        Assert.assertEquals("M", orderSummaryFormPage.getBoughtSize());
+
+        //sprawdź czy cena zakupionych porduktów jest prawidłowa
+        Assert.assertEquals(orderSummaryFormPage.getOrderPrice(),
+               Integer.valueOf(chosenQuantity) * orderSummaryFormPage.getPriceBoughtProduct(),0.2);
+
+
+        orderSummaryFormPage.takeScreenshot();
     }
 }
