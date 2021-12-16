@@ -21,10 +21,10 @@ public class OrderAndHistroyDetailsFormPage extends BasePage {
 
     @FindBy(id = "main")
     protected WebElement search;
-    //*[@id="content"]/table
 
-    @FindBy(xpath = "//*[@id=\"content\"]/table/tbody/../tr")
-    List<WebElement> orderListaaa;
+
+   // @FindBy(xpath = "//*[@id=\"content\"]/table/tbody/../tr")
+   // List<WebElement> orderListaaa;
 
     @FindBy(xpath = "//*[@id=\"content\"]/table")
     WebElement orderList;
