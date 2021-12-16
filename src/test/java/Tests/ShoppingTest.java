@@ -13,9 +13,8 @@ public class ShoppingTest extends BaseTest {
         String userFirstName = "Bartek";
         String userLastName = "Zawadzki";
 
-        UserLogInFormPage logInFormPage = new UserLogInFormPage(driver);
-
         //logowanie
+        UserLogInFormPage logInFormPage = new UserLogInFormPage(driver);
         logInFormPage.logIn("jlcfgaivperdnelxup@kvhrr.com", "haslo");
 
         // przejdź na stronę główną
@@ -24,22 +23,21 @@ public class ShoppingTest extends BaseTest {
         // sprawdź czy zalogował się poprawny user
         Assert.assertEquals(userFirstName + " " + userLastName, logInFormPage.getUserNameConfirmation());
 
-        ShoppingFormPage shoppingFormPage = new ShoppingFormPage(driver);
-
         //wybierz sweter
+        ShoppingFormPage shoppingFormPage = new ShoppingFormPage(driver);
         shoppingFormPage.pickHummingSweater();
         Assert.assertEquals("HUMMINGBIRD PRINTED SWEATER", shoppingFormPage.getSweaterName());
 
         int chosenSize = 1; // wybór rozmiaru 0-S, 1-M, 2-L, 3-XL
         String chosenQuantity = "5"; // ilość wybranego produktu
 
-        //dodaj konkretny sweter do koszyka
+        //dodaj sweter o konkretnym rozmiarze w konkretnej ilości
         shoppingFormPage.pickSweaterSize(chosenSize);
         shoppingFormPage.selectQuantity(chosenQuantity);
 
+        //sprawdz czy zniżka została poprawnie naliczona
         SweaterFormPage sweaterFormPage = new SweaterFormPage(driver);
 
-        //sprawdz czy zniżka została poprawnie naliczona
         Assert.assertEquals(Double.parseDouble(sweaterFormPage.getRegularPrice()) * 0.8,
                 Double.parseDouble(sweaterFormPage.getDiscountPrice()), 0.2);
 
@@ -48,9 +46,9 @@ public class ShoppingTest extends BaseTest {
         //przejdź do koszyka
         sweaterFormPage.goToCart();
 
+        //sprawdź poprawność adresu
         CartFormPage cartFormPage = new CartFormPage(driver);
 
-        //sprawdź poprawność adresu
         String confirmationText = cartFormPage.getAddressConfirmationMessage();
         Assert.assertTrue(confirmationText.contains(userFirstName));
         Assert.assertTrue(confirmationText.contains(userLastName));
@@ -62,12 +60,10 @@ public class ShoppingTest extends BaseTest {
         //zamówienie produktu
         cartFormPage.proceedCart();
 
-
         OrderSummaryFormPage orderSummaryFormPage = new OrderSummaryFormPage(driver);
 
         //sprawdź czy kupiony został prawidłowy rozmiar
         Assert.assertEquals(orderSummaryFormPage.checkChosenSize(chosenSize), orderSummaryFormPage.getBoughtSize());
-
 
         //sprawdź czy cena zakupionych porduktów jest prawidłowa
         Assert.assertEquals(orderSummaryFormPage.getOrderPrice(),

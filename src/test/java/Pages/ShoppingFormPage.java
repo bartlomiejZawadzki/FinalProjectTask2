@@ -24,7 +24,7 @@ public class ShoppingFormPage extends BasePage {
     @FindBy(id = "quantity_wanted")
     private WebElement quantityWanted;
 
-    @FindBy(xpath = "//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[2]/button")
+    @FindBy(className = "add-to-cart")
     private WebElement addCartButton;
 
     @FindBy(xpath = "//*[@id=\"main\"]/div[1]/div[2]/h1")
