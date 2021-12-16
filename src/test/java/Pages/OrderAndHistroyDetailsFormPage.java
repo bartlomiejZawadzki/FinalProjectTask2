@@ -19,15 +19,9 @@ public class OrderAndHistroyDetailsFormPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"_desktop_user_info\"]/div/a[2]/span")
     private WebElement accountButton;
 
-    @FindBy(id = "main")
-    protected WebElement search;
-
-
-   // @FindBy(xpath = "//*[@id=\"content\"]/table/tbody/../tr")
-   // List<WebElement> orderListaaa;
-
     @FindBy(xpath = "//*[@id=\"content\"]/table")
     WebElement orderList;
+
 
     public void goToOrderHistory() {
         accountButton.click();
@@ -37,13 +31,6 @@ public class OrderAndHistroyDetailsFormPage extends BasePage {
     public String checkOrderList() {
         return orderList.getText();
     }
-
-    //  public String getOrderLast() {
-    //      return orderListaaa
-    //              .get(0)
-    //              .findElement(By.xpath("//*[@id=\"content\"]/table/tbody/tr[1]"))
-    //              .getText();
-    //  }
 }
 
 

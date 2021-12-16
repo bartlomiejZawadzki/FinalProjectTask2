@@ -30,8 +30,6 @@ public class ShoppingFormPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"main\"]/div[1]/div[2]/h1")
     private WebElement sweaterName;
 
-    @FindBy(css = "div.modal-content")
-    private WebElement cartConfrimation;
 
 
     public void pickHummingSweater() {

@@ -24,17 +24,9 @@ public class CartFormPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"payment-confirmation\"]/div[1]/button")
     private WebElement paymentConfirmationButton;
 
-    @FindBy(xpath = "//*[@id=\"content-hook_payment_return\"]/div/div/div/p/strong[3]")
-    private WebElement orderConfirmation;
-
     @FindBy(css = "div.address")
     private WebElement addressSummaryConfirmation;
 
-    @FindBy(xpath = "//*[@id=\"main\"]/div/div[1]/div/div[2]/ul/li/div/div[2]/div[2]/div[1]/span[1]")
-    private WebElement regularPrice;
-
-    @FindBy(xpath = "//*[@id=\"main\"]/div/div[1]/div/div[2]/ul/li/div/div[2]/div[2]/div[2]/span")
-    private WebElement discountPrice;
 
     public void proceedCart() {
         shippingButton.click();
