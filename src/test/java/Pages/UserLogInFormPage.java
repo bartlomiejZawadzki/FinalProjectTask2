@@ -24,7 +24,7 @@ public class UserLogInFormPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"_desktop_user_info\"]/div/a[2]/span")
     private WebElement userNameConfirmation;
 
-    @FindBy (xpath = "//*[@id=\"_desktop_logo\"]/a/img")
+    @FindBy(xpath = "//*[@id=\"_desktop_logo\"]/a/img")
     private WebElement mainPage;
 
     public void logIn(String mail, String password) {
@@ -41,7 +41,7 @@ public class UserLogInFormPage extends BasePage {
         signinButton.click();
     }
 
-    public void backMainPage(){
+    public void backMainPage() {
         mainPage.click();
     }
 

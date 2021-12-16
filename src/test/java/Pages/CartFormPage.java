@@ -47,7 +47,6 @@ public class CartFormPage extends BasePage {
     public String getAddressConfirmationMessage() {
         return addressSummaryConfirmation.getText();
     }
-
 }
 
 

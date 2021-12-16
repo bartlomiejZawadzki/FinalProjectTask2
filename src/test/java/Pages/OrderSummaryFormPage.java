@@ -18,17 +18,20 @@ public class OrderSummaryFormPage extends BasePage {
         super(driver);
     }
 
-    @FindBy (xpath = "//*[@id=\"order-items\"]/div/div/div[3]/div/div[1]")
+    @FindBy(xpath = "//*[@id=\"order-items\"]/div/div/div[3]/div/div[1]")
     private WebElement priceBoughtProduct;
 
     @FindBy(xpath = "//*[@id=\"order-items\"]/div/div/div[3]/div/div[3]")
     private WebElement orderPrice;
 
-   public String getBoughtSize() {
+    @FindBy(xpath = "//*[@id=\"order-details\"]/ul/li[1]")
+    private WebElement orderNumber;
+
+    public String getBoughtSize() {
         String text = driver.findElement(By.xpath("//*[@id=\"order-items\"]/div/div/div[2]/span")).getText();
 
         String[] trimmedText = text.split(": ");
-        String boughtSize=trimmedText[1];
+        String boughtSize = trimmedText[1];
 
         return boughtSize;
     }
@@ -48,9 +51,30 @@ public class OrderSummaryFormPage extends BasePage {
         return Double.valueOf(priceOfOrder);
     }
 
+    public String getOrderNumber() {
+        String text2 = orderNumber.getText();
 
+        String[] trimmedText = text2.split(": ");
+        String orderText = trimmedText[1];
 
+        return orderText;
+    }
 
+    public String checkChosenSize(int size) {
+        switch (size) {
+            case 0:
+                return "S";
+            case 1:
+                return "M";
+            case 2:
+                return "L";
+            case 3:
+                return "XL";
+
+            default:
+                return "Brak rozmiaru";
+        }
+    }
 
     public void takeScreenshot() {
         Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);

@@ -26,7 +26,9 @@ public class SweaterFormPage extends BasePage {
         return regularPrice.getText().substring(1);
     }
 
-    public String getDiscountPrice(){ return discountPrice.getText().substring(1);}
+    public String getDiscountPrice() {
+        return discountPrice.getText().substring(1);
+    }
 
     public void goToCart() {
         proceedButton.click();

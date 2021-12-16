@@ -6,56 +6,47 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-
 import java.util.List;
 
-public class OrderAndHistroyDetailsFormPage extends BasePage{
-    public  OrderAndHistroyDetailsFormPage (WebDriver driver){
-        super (driver);
+public class OrderAndHistroyDetailsFormPage extends BasePage {
+    public OrderAndHistroyDetailsFormPage(WebDriver driver) {
+        super(driver);
     }
 
     @FindBy(xpath = "//*[@id=\"history-link\"]/span")
     private WebElement orderHistroyButton;
+
+    @FindBy(xpath = "//*[@id=\"_desktop_user_info\"]/div/a[2]/span")
+    private WebElement accountButton;
 
     @FindBy(id = "main")
     protected WebElement search;
     //*[@id="content"]/table
 
     @FindBy(xpath = "//*[@id=\"content\"]/table/tbody/../tr")
-    List<WebElement> orderNumber;
+    List<WebElement> orderListaaa;
 
-    public void goToOrderHistory(){
+    @FindBy(xpath = "//*[@id=\"content\"]/table")
+    WebElement orderList;
+
+    public void goToOrderHistory() {
+        accountButton.click();
         orderHistroyButton.click();
     }
 
-    public String[]  cosCos(String number){
-        //WebElement x = driver.findElement(By.xpath("//*[contains(text(), number)]"));
-        String text = driver.findElement(By.xpath("//*[@id=\"content-hook_payment_return\"]/div/div/div/p/text()[6]")).getText();
-
-        String[] trimmedText = text.split("refernce");
-
-        for (String str : trimmedText) {
-            System.out.println(str);
-        }
-        return trimmedText;
-
-
-       // return orderNumber;
-
-        /*
-        WebDriverWait wait = new WebDriverWait(driver, 1000);
-        wait.until(ExpectedConditions.visibilityOf(search));
-        if(search.isEnabled()){
-            search.sendKeys(number);
-            search.submit();
-        }else{
-            Assert.fail();
-
-         */
-
-       }
-
+    public String checkOrderList() {
+        return orderList.getText();
     }
+
+    //  public String getOrderLast() {
+    //      return orderListaaa
+    //              .get(0)
+    //              .findElement(By.xpath("//*[@id=\"content\"]/table/tbody/tr[1]"))
+    //              .getText();
+    //  }
+}
+
+
 
 
 

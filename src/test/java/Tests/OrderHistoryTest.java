@@ -1,17 +1,16 @@
 package Tests;
 
 import Pages.OrderAndHistroyDetailsFormPage;
+import Pages.OrderSummaryFormPage;
 import Pages.UserLogInFormPage;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 public class OrderHistoryTest extends BaseTest {
 
     @Test
-    public void shouldFindOrderInHistory(){
+    public void shouldFindOrderInHistory() {
         driver.get("https://mystore-testlab.coderslab.pl/index.php");
 
         String userFirstName = "Bartek";
@@ -23,9 +22,16 @@ public class OrderHistoryTest extends BaseTest {
         logInFormPage.logIn("jlcfgaivperdnelxup@kvhrr.com", "haslo");
 
         OrderAndHistroyDetailsFormPage orderHistoryFormPage = new OrderAndHistroyDetailsFormPage(driver);
+        OrderSummaryFormPage summaryFormPage = new OrderSummaryFormPage(driver);
 
         orderHistoryFormPage.goToOrderHistory();
         waitASecond();
+
+        String confirmationOrder = orderHistoryFormPage.checkOrderList();
+        String lastOrderNumber = summaryFormPage.getOrderNumber();
+
+        //sprawdź czy jest zamówenie
+        Assert.assertTrue(confirmationOrder.contains(lastOrderNumber));
 
         //String confirmation = orderHistoryFormPage.cosCos("RQXXREOFV");
         //Assert.assertTrue();

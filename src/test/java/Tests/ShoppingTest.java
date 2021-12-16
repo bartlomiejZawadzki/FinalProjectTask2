@@ -40,7 +40,7 @@ public class ShoppingTest extends BaseTest {
         SweaterFormPage sweaterFormPage = new SweaterFormPage(driver);
 
         //sprawdz czy zniżka została poprawnie naliczona
-        Assert.assertEquals(Double.parseDouble(sweaterFormPage.getRegularPrice())*0.8,
+        Assert.assertEquals(Double.parseDouble(sweaterFormPage.getRegularPrice()) * 0.8,
                 Double.parseDouble(sweaterFormPage.getDiscountPrice()), 0.2);
 
         shoppingFormPage.addSweaterToCart();
@@ -59,22 +59,36 @@ public class ShoppingTest extends BaseTest {
         Assert.assertTrue(confirmationText.contains("01-001"));
         Assert.assertTrue(confirmationText.contains("United Kingdom"));
 
+        //zamówienie produktu
         cartFormPage.proceedCart();
 
-        OrderAndHistroyDetailsFormPage oder=new OrderAndHistroyDetailsFormPage(driver);
-        //oder.cosCos("XRHNHGEBX");
 
-        //zrób screenshot
         OrderSummaryFormPage orderSummaryFormPage = new OrderSummaryFormPage(driver);
-        //sprawdź czy kupiony został prawidłowy produkt
 
-        Assert.assertEquals("M", orderSummaryFormPage.getBoughtSize());
+        //sprawdź czy kupiony został prawidłowy rozmiar
+        Assert.assertEquals(orderSummaryFormPage.checkChosenSize(chosenSize), orderSummaryFormPage.getBoughtSize());
+
 
         //sprawdź czy cena zakupionych porduktów jest prawidłowa
         Assert.assertEquals(orderSummaryFormPage.getOrderPrice(),
-               Integer.valueOf(chosenQuantity) * orderSummaryFormPage.getPriceBoughtProduct(),0.2);
+                Integer.valueOf(chosenQuantity) * orderSummaryFormPage.getPriceBoughtProduct(), 0.2);
 
+        waitASecond();
 
+        //pobierz numer zamównienia
+        String lastOrderNumber = orderSummaryFormPage.getOrderNumber();
+
+        //zrób screenshot
         orderSummaryFormPage.takeScreenshot();
+
+        //przejdź do historii zamówień
+        OrderAndHistroyDetailsFormPage orderHistoryFormPage = new OrderAndHistroyDetailsFormPage(driver);
+        orderHistoryFormPage.goToOrderHistory();
+
+        //lista zamówień w zmiennej
+        String confirmationOrder = orderHistoryFormPage.checkOrderList();
+
+        // sprawdź czy ostatnie zamówienie znajduje się w historii
+        Assert.assertTrue(confirmationOrder.contains(orderHistoryFormPage.checkOrderList()));
     }
 }
